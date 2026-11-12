@@ -26,6 +26,9 @@ INPUTS = ROOT / "data" / "inputs"
 # (path in the source repository, what it is, licence)
 FILES = [
     ("data/raw/crossd/index_20261103.json", "CrOSSD project list and snapshot timestamps", "CrOSSD, free use (T. Dam, 2026-11-12)"),
+    ("data/raw/crossd/strata/most-starred-repos.yaml", "CrOSSD crawl list, most-starred, of 2024-04-09", "Apache-2.0 (FH-CrOSSD/crossd)"),
+    ("data/raw/crossd/strata/random-sample-repos.yaml", "CrOSSD crawl list, random sample, of 2024-04-09", "Apache-2.0 (FH-CrOSSD/crossd)"),
+    ("data/raw/crossd/strata/netidee_configmap.yaml", "CrOSSD crawl list, netidee projects, from 2025-07", "Apache-2.0 (FH-CrOSSD/crossd)"),
     ("data/raw/crossd/metrics.jsonl.gz", "raw /api/metrics responses, cache of 2026-11-03/04", "CrOSSD, free use (T. Dam, 2026-11-12)"),
     ("analysis/01_cohort/cohort_2024-08-01.csv", "frozen cohort at 1 Aug 2024", "replication package"),
     ("analysis/01_cohort/cohort_2025-01-01.csv", "robustness cohort at 1 Jan 2025", "replication package"),

@@ -28,6 +28,7 @@ from __future__ import annotations
 import gzip
 import hashlib
 import json
+import re
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
@@ -144,6 +145,21 @@ def reading(project, instrument, component, value, observed, evidence, source, s
 # ---------------------------------------------------------------------------------------------
 # Readings
 # ---------------------------------------------------------------------------------------------
+
+def crawl_lists() -> dict[str, str]:
+    """Project (lower case) -> the CrOSSD crawl list it was first put on; projects on none came later."""
+    out: dict[str, str] = {}
+    for stratum, name in (("most_starred", "most-starred-repos.yaml"), ("random_sample", "random-sample-repos.yaml"),
+                          ("netidee", "netidee_configmap.yaml")):
+        path = INPUTS / name
+        if not path.exists():
+            continue
+        for line in path.read_text(encoding="utf-8").splitlines():
+            entry = line.strip()
+            if re.fullmatch(r"[\w.-]+/[\w.-]+", entry) and not entry.startswith("apps/"):
+                out.setdefault(entry.lower(), stratum)
+    return out
+
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -496,7 +512,8 @@ def main() -> int:
     projects = pd.DataFrame({"project": sorted(set(readings.project))})
     c1 = cohorts["2024-08-01"].set_index("project")
     projects["stratum"] = projects.project.map(c1.stratum).fillna(
-        projects.project.map(cohorts["2025-01-01"].set_index("project").stratum))
+        projects.project.map(cohorts["2025-01-01"].set_index("project").stratum)).fillna(
+        projects.project.str.lower().map(crawl_lists()))
     projects["in_cohort"] = projects.project.isin(c1.index)
     projects["gone_now"] = projects.project.map(c1.gone_now).fillna(False).astype(bool)
     projects["snapshots"] = projects.project.map(lambda p: len(index.get(p, [])))
