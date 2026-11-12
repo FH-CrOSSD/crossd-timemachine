@@ -1,0 +1,12 @@
+data/*
+!data/README.md
+.env
+node_modules/
+web/.svelte-kit/
+web/build/
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+paper/
+build/

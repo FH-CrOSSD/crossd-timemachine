@@ -1,0 +1,13 @@
+{
+  "upload_type": "software",
+  "title": "CrOSSD Time Machine: open-source health and security scores as they were",
+  "description": "<p>A web explorer that shows what open-source health and security scores said about a project at a past date, using only values read by then, and what happened to the project afterwards. Code and built data.</p>",
+  "creators": [
+    {"name": "Neumaier, Sebastian", "affiliation": "University of Applied Sciences St. Pölten, Austria", "orcid": "0000-0002-9804-4882"},
+    {"name": "Dam, Tobias", "affiliation": "University of Applied Sciences St. Pölten, Austria"}
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "related_identifiers": [{"identifier": "10.5281/zenodo.24113633", "relation": "isDerivedFrom", "scheme": "doi"}],
+  "notes": "Funded by the Austrian Research Promotion Agency (FFG), project DigiSov-CrOSSD, no. 68758333, and the Internet Stiftung (netidee), project CrOSSD2."
+}

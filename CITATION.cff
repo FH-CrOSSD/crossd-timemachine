@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software or its data, please cite it as below."
+title: "CrOSSD Time Machine: open-source health and security scores as they were"
+type: software
+authors:
+  - family-names: Neumaier
+    given-names: Sebastian
+    orcid: "https://orcid.org/0000-0002-9804-4882"
+    affiliation: "University of Applied Sciences St. Pölten, Austria"
+  - family-names: Dam
+    given-names: Tobias
+    affiliation: "University of Applied Sciences St. Pölten, Austria"
+license: MIT
+repository-code: "https://github.com/FH-CrOSSD/crossd-timemachine"
+url: "https://fh-crossd.github.io/crossd-timemachine/"
+version: 0.2.0
+date-released: 2026-11-12
+references:
+  - type: software
+    title: "Replication package: Would the Score Have Warned Us? A Point-in-Time Validity Audit of Open-Source Health and Security Scores"
+    authors:
+      - family-names: Neumaier
+        given-names: Sebastian
+      - family-names: Dam
+        given-names: Tobias
+    doi: 10.5281/zenodo.24113633

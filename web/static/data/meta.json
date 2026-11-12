@@ -1,0 +1,32 @@
+{
+  "built": "2026-11-12T17:03:10+00:00",
+  "data_freeze": "2026-11-03",
+  "t0_min": "2024-04-01",
+  "t0_max": "2026-11-03",
+  "citation": "Neumaier and Dam, Would the Score Have Warned Us?, under review; doi:10.5281/zenodo.24113633",
+  "inputs": {
+    "attached_advisories_2024-08-01.parquet": "a7294df4929f91d06b82b614c12840f1a44db6ea0c0e3635d30337c99d080189",
+    "attached_advisories_2025-01-01.parquet": "dc5596feb35b793a8028ff5d23e1e4802d1daa4e4ad3192ace29e787650e3252",
+    "backdating.csv": "59b0777b29d54ae9d0bc1c5c0444c0c2a0e5c9889cae5c9f97dc2a207a6e9b79",
+    "claims.csv": "81f45f27d2bd708a76fd133b9e94bdb61e1d0d0728d2bbc3ee5120f4560d74d6",
+    "cohort_2024-08-01.csv": "39df43f1c24ab76de6563f1f8555347e21b0ddde8282cc222910b6b55727612b",
+    "cohort_2025-01-01.csv": "7f4b4d9e2d740c85cfe19e9178334134b861d70acc63df56707e8f9c779387ec",
+    "github_meta_2025-01-01.parquet": "37eb452476c936c79bdf50c2920f6a40180672dcac16772e0810e22c7cfa8a2c",
+    "gone_2024-08-01.jsonl": "dd13852b631e84b768b19704693d494c9d44007eb10a776978624075ca0aa86e",
+    "history_cohort_2024-08-01.parquet": "164c6da77cb6e281412b21b8b9549384781f44c0cc4095c16924f371f36d8f1a",
+    "index_20261103.json": "7b1005ae2b0ba89a8fbc77dbc17ba6e95c04dc034313e16974040af64f54f99e",
+    "measured_validity.csv": "85f483f40131b77cd72f8c493e58cfb6a1467bb8655d736dd0bf80ec1b291d69",
+    "metrics.jsonl.gz": "4c140eb78860280840055da627d2cd05089f5c8c9f042a82d99ddd2d79007510",
+    "opencode_2024-08-01.parquet": "38b8f9becac13f5b977ab44e518efc45d89e0bf5909501aa6982bd9d6988ab30",
+    "opencode_2025-01-01.parquet": "ee3979207e7e498aad47b13a10e3d7c7a1876e08ad98a864a4a5ab44e6a4ba96",
+    "published_2026-11-04.jsonl": "cb86954b747c1f2f42fba53125afffad7cfe1e1d295535d5f49403cf4683a029",
+    "scorecard_2024-08-01.parquet": "92346992bb72d3e991cef05cd9b186e408818a08158b5541b4183a9d73a3b1cc",
+    "scorecard_maintained_2025-01-01.parquet": "a339739f05bc251f30b0309a6c9c607eb3b162fd744f4dc4c1c2e8b49655c04c",
+    "scorecard_published_2024-07-29.parquet": "196c9917b08c1dba2cdb3887f6fcb327318fba688571a6769ce17f03ed594352",
+    "scorecard_published_2024-12-30.parquet": "c9d61f3fc0d0ef1a2ef6b5b7cf0157016c3eb798458e1e554e1681c438397c4a",
+    "crossd_metrics_monthly.jsonl.gz": "f077bd058c7ec9b3bd326b8b4417fa251687386ef416ffdc64f35ae005848e6c",
+    "crossd_metrics_rest.jsonl.gz": "0a56e5c4d73477b86389095b4f5ff1f3b6f2ae67cbed28d7b20bb6410fddf990",
+    "scorecard_history_early_2026-11-12.parquet": "e0d3d00b67470a719ce3926cac98fe34ed4e9ea670949c59447af0bff2617730",
+    "scorecard_history_2026-11-12.parquet": "8218bfd78a460724e0dd0e79dbe371c6a46a7056da5d845b8883a0449e895aa1"
+  }
+}

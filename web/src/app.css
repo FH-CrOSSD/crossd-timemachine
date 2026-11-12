@@ -1,0 +1,143 @@
+@import 'tailwindcss';
+
+/*
+  Tokens. White ground with a neutral grey ramp (dark theme stays warm), CrOSSD orange as the one accent:
+  t0, selection, primary action. Metric values stay neutral. Events use toned semantic colours.
+*/
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --raised: #f4f4f5;
+  --ink: #18181b;
+  --ink-2: #52525b;
+  --ink-3: #6b6b73;
+  --line: rgb(24 24 27 / 0.09);
+  --line-strong: rgb(24 24 27 / 0.18);
+  --accent: #ef562f;
+  --accent-ink: #b83d1d;
+  --accent-soft: rgb(239 86 47 / 0.1);
+  --event-loss: #b42318;
+  --event-warn: #a15c07;
+  --event-info: #6b6b73;
+  --after: rgb(24 24 27 / 0.03);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #161513;
+    --surface: #1c1a18;
+    --raised: #262421;
+    --ink: #efe9de;
+    --ink-2: #aaa398;
+    --ink-3: #8f897f;
+    --line: rgb(239 233 222 / 0.08);
+    --line-strong: rgb(239 233 222 / 0.16);
+    --accent: #fe795d;
+    --accent-ink: #fe8c73;
+    --accent-soft: rgb(254 121 93 / 0.12);
+    --event-loss: #f0716b;
+    --event-warn: #e3a34a;
+    --event-info: #8f897f;
+    --after: rgb(239 233 222 / 0.03);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #161513;
+  --surface: #1c1a18;
+  --raised: #262421;
+  --ink: #efe9de;
+  --ink-2: #aaa398;
+  --ink-3: #8f897f;
+  --line: rgb(239 233 222 / 0.08);
+  --line-strong: rgb(239 233 222 / 0.16);
+  --accent: #fe795d;
+  --accent-ink: #fe8c73;
+  --accent-soft: rgb(254 121 93 / 0.12);
+  --event-loss: #f0716b;
+  --event-warn: #e3a34a;
+  --event-info: #8f897f;
+  --after: rgb(239 233 222 / 0.03);
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --line: rgb(24 24 27 / 0.3);
+    --line-strong: rgb(24 24 27 / 0.5);
+    --ink-3: #46464d;
+  }
+}
+
+@theme {
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+}
+
+html {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 100%;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  line-height: 1.5;
+}
+
+.mono,
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.press {
+  transition: transform 100ms ease-out, background-color 150ms var(--ease), color 150ms var(--ease);
+}
+
+.press:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+  .press:active {
+    transform: none;
+  }
+}
