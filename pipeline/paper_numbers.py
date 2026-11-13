@@ -8,7 +8,7 @@ reading at t0, events counted from t0 to the data freeze.
 Output: paper/generated/numbers.tex
 
 Usage:
-    python pipeline/paper_numbers.py [--project minio/minio] [--event archived] [--t0 2024-08-01]
+    python pipeline/paper_numbers.py [--project minio/minio] [--second atlassian/react-beautiful-dnd] [--event archived] [--t0 2024-08-01]
 """
 
 from __future__ import annotations
@@ -59,6 +59,7 @@ def lead(series: pd.DataFrame, flag_max: float) -> tuple[float, float] | None:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--project", default="minio/minio")
+    ap.add_argument("--second", default="atlassian/react-beautiful-dnd", help="second case of the walkthrough")
     ap.add_argument("--event", default="archived")
     ap.add_argument("--t0", default="2024-08-01")
     ap.add_argument("--shot", default="2026-04-20", help="t0 of the screenshot")
@@ -112,38 +113,57 @@ def main() -> int:
             key = macro(v.component)
             m[f"Valid{key}Auc"], m[f"Valid{key}Lo"], m[f"Valid{key}Hi"] = found.groups()
 
-    # The walkthrough: lead times before one event of one project
-    ev = events[(events.project == args.project) & (events.kind == args.event)].dropna(subset=["date"]).sort_values("date")
-    if not ev.empty:
-        when = float(ev.date.iloc[0])
-        m["CaseEventDate"] = day(when)
-        mine = readings[(readings.project == args.project) & (readings.observed < when)]
-        leads = []
-        for f in validity[validity.flag_max.notna() & (validity.against == "failure")].itertuples():
-            run = lead(mine[(mine.instrument == f.instrument) & (mine.component == f.component)], f.flag_max)
-            if run:
-                leads.append((f.component, run))
-        for component, (since, last) in leads:
-            key = macro(component)
-            m[f"CaseLead{key}Since"] = day(since)
-            m[f"CaseLead{key}Months"] = months(when - since)
-        m["CaseLeads"] = thousands(len(leads))
+    # The walkthrough: lead times before one event of a project, and the scores at their operating point at t0
+    words = {0: "none", 1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
     t0_case = pd.Timestamp(args.t0, tz="UTC").timestamp()
-    at = readings[(readings.project == args.project) & (readings.observed <= t0_case)].sort_values("observed")
-    flagged_at = 0
-    for f in validity[validity.flag_max.notna()].itertuples():
-        last = at[(at.instrument == f.instrument) & (at.component == f.component)].dropna(subset=["value"]).tail(1)
-        flagged_at += int(len(last) == 1 and last.value.iloc[0] <= f.flag_max)
-    m["CaseFlagsAtTzero"] = thousands(flagged_at)
+
+    def case(prefix: str, project: str, event: str) -> float | None:
+        ev = events[(events.project == project) & (events.kind == event)].dropna(subset=["date"]).sort_values("date")
+        when = float(ev.date.iloc[0]) if not ev.empty else None
+        if when is not None:
+            m[f"{prefix}EventDate"] = day(when)
+            mine = readings[(readings.project == project) & (readings.observed < when)]
+            leads = []
+            for f in validity[validity.flag_max.notna() & (validity.against == "failure")].itertuples():
+                run = lead(mine[(mine.instrument == f.instrument) & (mine.component == f.component)], f.flag_max)
+                if run:
+                    leads.append((f.component, run))
+            for component, (since, last) in leads:
+                key = macro(component)
+                m[f"{prefix}Lead{key}Since"] = day(since)
+                m[f"{prefix}Lead{key}Months"] = months(when - since)
+            m[f"{prefix}Leads"] = thousands(len(leads))
+        at = readings[(readings.project == project) & (readings.observed <= t0_case)].sort_values("observed")
+        flagged_at = []
+        for f in validity[validity.flag_max.notna()].itertuples():
+            last = at[(at.instrument == f.instrument) & (at.component == f.component)].dropna(subset=["value"]).tail(1)
+            if len(last) == 1 and last.value.iloc[0] <= f.flag_max:
+                flagged_at.append(f)
+        m[f"{prefix}FlagsAtTzero"] = thousands(len(flagged_at))
+        m[f"{prefix}FlagsAtTzeroWord"] = words.get(len(flagged_at), thousands(len(flagged_at)))
+        failure_at = [f for f in flagged_at if f.against == "failure"]
+        m[f"{prefix}FailureFlagsAtTzeroWord"] = words.get(len(failure_at), thousands(len(failure_at)))
+        m[f"{prefix}Unfixed"] = thousands(((events.project == project) & (events.kind == "advisory")
+                                           & events.detail.str.contains("no fixed version", case=False)).sum())
+        return when
+
+    when = case("Case", args.project, args.event)
     shot = pd.Timestamp(args.shot, tz="UTC").timestamp()
     m["CaseShot"] = day(shot)
-    if not ev.empty:
-        m["CaseShotDaysBefore"] = thousands((float(ev.date.iloc[0]) - shot) / DAY)
-    m["CaseFlagsAtTzeroWord"] = {0: "none", 1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}.get(flagged_at, thousands(flagged_at))
-    m["FlagsWord"] = {0: "none", 1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}.get(int(validity.flag_max.notna().sum()), m["Flags"])
+    if when is not None:
+        m["CaseShotDaysBefore"] = thousands((when - shot) / DAY)
+    m["FlagsWord"] = words.get(int(validity.flag_max.notna().sum()), m["Flags"])
+    failure_flags = int((validity.flag_max.notna() & (validity.against == "failure")).sum())
+    m["FailureFlagsWord"] = words.get(failure_flags, thousands(failure_flags))
     m["CaseTzero"] = day(t0_case)
-    m["CaseUnfixed"] = thousands(((events.project == args.project) & (events.kind == "advisory")
-                                  & events.detail.str.contains("no fixed version", case=False)).sum())
+
+    # The second case: flagged at t0, and Scorecard Maintained left its operating point between t0 and the event
+    when = case("Second", args.second, args.event)
+    if when is not None and "SecondLeadMaintainedSince" in m:
+        maintained = readings[(readings.project == args.second) & (readings.instrument == "scorecard")
+                              & (readings.component == "Maintained") & (readings.observed > t0_case)
+                              & (readings.observed < when)].dropna(subset=["value"])
+        m["SecondMaintainedBetween"] = f"{maintained.value.max():g}"
 
     # Look-alikes at t0 for each operating point (descriptive, as the page shows them)
     t0 = pd.Timestamp(args.t0, tz="UTC").timestamp()
