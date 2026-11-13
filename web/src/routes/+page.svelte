@@ -13,6 +13,7 @@
   import Guide from '$lib/components/Guide.svelte';
 
   const DOI = 'https://doi.org/10.5281/zenodo.24113633';
+  const CROSSD = 'https://health.crossd.tech';
   const DEFAULT_PROJECT = 'minio/minio';
   const DEFAULT_T0 = Date.UTC(2024, 7, 1) / 1000;
 
@@ -186,6 +187,13 @@
           <p class="mt-1.5 text-[14px] text-ink-2">
             {#if info?.stratum}{strata[info.stratum] ?? info.stratum} of the CrOSSD panel{:else}CrOSSD panel{/if}{#if info?.in_cohort}, in the cohort of 1 Aug 2024{/if}
             <span class="mono text-ink-3"> · {info?.crossd_readings ?? 0} CrOSSD readings</span>
+            {#if (info?.crossd_readings ?? 0) > 0}
+              <span class="text-ink-3">{' · '}</span><a
+                class="text-ink-2 underline decoration-line-strong underline-offset-2 hover:text-ink"
+                href={`${CROSSD}/project/${encodeURIComponent(current)}`}
+                target="_blank"
+                rel="noreferrer">today on CrOSSD ↗</a>
+            {/if}
           </p>
         </div>
         <p class="max-w-[46ch] text-[14px] leading-5 text-ink-2">
@@ -217,7 +225,7 @@
   <footer class="border-t border-line">
     <div class="mx-auto grid max-w-[1440px] gap-2 px-4 py-6 text-[13px] leading-5 text-ink-3 sm:px-8">
       <p>
-        Readings from CrOSSD (health.crossd.tech), published OpenSSF Scorecard scans and Criticality Score lists, and
+        Readings from <a class="underline decoration-line-strong underline-offset-2 hover:text-ink" href={CROSSD} target="_blank" rel="noreferrer">CrOSSD</a> (health.crossd.tech), published OpenSSF Scorecard scans and Criticality Score lists, and
         Scorecard checks and openCode rules rebuilt from dated data. Each value is dated by when it was read, never by
         its snapshot. Events from GitHub, git history, OSV and Software Heritage.
       </p>

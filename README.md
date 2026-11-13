@@ -17,6 +17,8 @@ it quotes.
 
 Live: https://fh-crossd.github.io/crossd-timemachine/ (built from `main` by `.github/workflows/pages.yml`).
 
+Video (3 min): https://youtu.be/SThzrXSXCBE
+
 Locally:
 
 The built data is in the repository, so only Node.js (20.19 or newer) is needed:

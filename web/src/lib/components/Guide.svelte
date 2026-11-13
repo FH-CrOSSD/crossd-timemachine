@@ -82,7 +82,8 @@
     <div>
       <h4 class="font-medium text-ink">The four instruments</h4>
       <p>
-        <span class="text-ink">CrOSSD</span> health metrics, crawled weekly from GitHub since April 2024.
+        <a class="text-ink underline decoration-line-strong underline-offset-2" href="https://health.crossd.tech" target="_blank" rel="noreferrer">CrOSSD</a>
+        health metrics, crawled weekly from GitHub since April 2024; its own site shows each project's latest values.
         <span class="text-ink">OpenSSF Scorecard</span> security checks, each 0 to 10, and a weighted aggregate.
         <span class="text-ink">OpenSSF Criticality Score</span>, how important a project is, 0 to 1.
         <span class="text-ink">openCode badges</span> for maintenance and security, from the rules of the German
