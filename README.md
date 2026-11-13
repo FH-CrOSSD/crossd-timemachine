@@ -19,6 +19,8 @@ Live: https://fh-crossd.github.io/crossd-timemachine/ (built from `main` by `.gi
 
 Video (3 min): https://youtu.be/SThzrXSXCBE
 
+Archived at Zenodo: https://doi.org/10.5281/zenodo.24195169 (all versions; v1.0.0: https://doi.org/10.5281/zenodo.24195170)
+
 Locally:
 
 The built data is in the repository, so only Node.js (20.19 or newer) is needed:

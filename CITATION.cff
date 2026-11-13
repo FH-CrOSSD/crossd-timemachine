@@ -13,6 +13,7 @@ authors:
 license: MIT
 repository-code: "https://github.com/FH-CrOSSD/crossd-timemachine"
 url: "https://fh-crossd.github.io/crossd-timemachine/"
+doi: 10.5281/zenodo.24195169
 version: 1.0.0
 date-released: 2026-11-13
 references:
